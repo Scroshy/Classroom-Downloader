@@ -1,4 +1,6 @@
-import pathlib
+import os
+from tkinter import filedialog
+import tkinter as tk
 import auth
 import classroom_manager
 import downloader
@@ -40,7 +42,24 @@ def main():
 
     # 5. Download
     folder_name = downloader.sanitize_filename(selected_course['name'])
-    folder_path = pathlib.Path.home() / 'Desktop' / 'S7' / folder_name
+# --- FIX STARTS HERE ---
+    print("Opening folder dialog...")
+    root = tk.Tk()
+    root.withdraw()  # Hide the main blank window
+    root.attributes('-topmost', True)  # Force the dialog to appear on top of other windows
+    
+    folder_destination = filedialog.askdirectory(title="Select destination directory")
+    
+    root.destroy()   # Clean up the window instance
+    # --- FIX ENDS HERE ---
+
+    # Check if user cancelled
+    if not folder_destination:
+        print("Download cancelled by user.")
+        return
+
+    folder_path = os.path.join(folder_destination, folder_name)
+    print("download")
     downloader.download_files(dr_service, files, folder_path)
 
     print("\nAll operations completed successfully!")
