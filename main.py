@@ -42,7 +42,6 @@ def main():
 
     # 5. Download
     folder_name = downloader.sanitize_filename(selected_course['name'])
-# --- FIX STARTS HERE ---
     print("Opening folder dialog...")
     root = tk.Tk()
     root.withdraw()  # Hide the main blank window
@@ -51,7 +50,6 @@ def main():
     folder_destination = filedialog.askdirectory(title="Select destination directory")
     
     root.destroy()   # Clean up the window instance
-    # --- FIX ENDS HERE ---
 
     # Check if user cancelled
     if not folder_destination:
